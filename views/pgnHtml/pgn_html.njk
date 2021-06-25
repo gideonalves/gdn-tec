@@ -1,0 +1,48 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+<section class="container" id="continer1">
+
+        <div id="menu" class="menu">    
+            <a href="/pgnHtml/1">Atributos de html</a>
+            <a href="/pgnHtml/2">Cabeçalhos</a>
+            <a href="/pgnHtml/3">Cores</a>
+            <a href="/pgnHtml/4">Editores de html</a>
+            <a href="/pgnHtml/5">Elementos de html</a>
+            <a href="/pgnHtml/6">Span</a>
+        </div>
+
+        <div class="central">
+        
+        {% if item == 1 %}
+            {% include "./partials/atributos.njk" %}
+         {% endif %}  
+
+         {% if item == 2 %}
+            {% include "./partials/cabecalho.njk" %}
+         {% endif %}  
+
+         {% if item == 3 %}
+            {% include "./partials/cores.njk" %}
+         {% endif %} 
+
+         {% if item == 4 %}
+            {% include "./partials/editores.njk" %}
+         {% endif %} 
+         
+         {% if item == 5 %}
+            {% include "./partials/elementos.njk" %}
+         {% endif %}
+
+          {% if item == 6 %}
+            {% include "./partials/span.njk" %}
+         {% endif %}
+            
+
+        </div>
+
+</section> 
+
+{% endblock %}
+

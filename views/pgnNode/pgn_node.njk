@@ -1,0 +1,23 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+<section class="container" id="continer1">
+
+        <div id="menu" class="menu">    
+            <a href="/pgnNode/1">modules</a>
+         
+        </div>
+
+        <div class="central">
+        
+            {% if item == 1 %}
+                  {% include "./partials/modules.njk" %}
+            {% endif %} 
+
+        </div>
+
+</section> 
+
+{% endblock %}
+

@@ -1,0 +1,31 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+<section class="container" id="continer1">
+
+        <div id="menu" class="menu">    
+            <a href="/pgnCss/1">Animations</a>
+            <a href="/pgnCss/2">FlexBox</a>
+         
+        </div>
+
+        <div class="central">
+        
+            {% if item == 1 %}
+                  {% include "./partials/animation.njk" %}
+            {% endif %} 
+
+            {% if item == 2 %}
+                  {% include "./partials/FlexBox.njk" %}
+            {% endif %}  
+
+        
+            
+
+        </div>
+
+</section> 
+
+{% endblock %}
+

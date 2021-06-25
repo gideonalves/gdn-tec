@@ -1,0 +1,370 @@
+<div class="central">
+        <h1>Flex Box</h1>
+
+        <p>O Flexbox tem como meta ser um modo mais eficiente para criar leiautes, alinhar e distribuir
+                espaços entre itens em um container, mesmo quando as dimensões destes itens são desconhecidas
+                e/ou dinâmicas (daí o termo "flex").</p>
+            <p>Vamos aprender os fundamentos do CSS Flexbox para alinhamento e posicionamento, e como utilizar
+                suas funcionalidades corretamente.</p>
+
+            <h3>O que é o <em>Flexbox</em></h3>
+            <p>Por muito tempo, as únicas ferramentas disponíveis para criar leiautes em CSS e posicionar
+                elementos com boa compatibilidade entre browsers eram
+                <code>float</code> e <code>position</code>. Porém, essas ferramentas possuem algumas limitações
+                muito frustrantes, especialmente no que diz respeito à responsividade. Algumas tarefas que
+                consideramos básicas em um leiaute, como centralização vertical de um elemento-filho com relação
+                a um elemento-pai ou fazer com que elementos-filhos ocupem a mesma quantidade de espaço, ou
+                colunas terem o mesmo tamanho independente da quantidade de conteúdo interno, eram impossíveis
+                ou muito difíceis de serem manejadas com floats ou position, ao menos de forma prática e
+                <em>flexível</em>.
+            </p>
+            <p>A ferramenta Flexbox (de <em>Flexible Box</em>) foi criada para tornar essas tarefas mais simples
+                e funcionais: os filhos de um elemento com Flexbox podem se posicionar em qualquer direção e
+                pode ter dimensões flexíveis para se adaptar.</p>
+            <h3>Elementos</h3>
+            <p>O Flexbox é um módulo completo e não uma única propriedade; algumas delas devem ser declaradas no
+                container (o elemento-pai, que chamamos de <em>flex container</em>), enquanto outras devem ser
+                declaradas nos elementos-filhos (os <em>flex itens</em>).</p>
+            <p>Se o leiaute "padrão" é baseado nas direções <code>block</code> e <code>inline</code>, o leiaute
+                Flex é baseado em direções "flex flow". Veja abaixo um diagrama da especificação, explicando a
+                ideia central por trás do leiaute Flex.</p>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/11/00-basic-terminology.svg"
+                    alt="Diagrama explicando a terminologia do Flex. A dimensão no sentido do eixo principal é chamada de tamanho principal, e a outra direção é chamada de transversal. Estes tamanhos, tanto o principal como o transversa, têm uma borda inicial e uma borda final"
+                    target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Os ítens serão dispostos no leiaute seguindo ou o eixo principal ou o
+                transversal.</p>
+            <ul>
+                <li>
+                    <p>Eixo principal: o eixo principal de um <em>flex container</em> é o eixo primário e ao
+                        longo dele são inseridos os <em>flex items</em>. <strong>Cuidado</strong>: O eixo
+                        principal não é necessariamente horizontal; vai depender da propriedade
+                        <code>flex-direction</code> (veja abaixo).
+                    </p>
+                </li>
+                <li>
+                    <p><em>main-start | main-end</em>: os <em>flex items</em> são inseridos dentro do container
+                        começando pelo lado <em>start</em>, indo em direção ao lado <em>end</em>.</p>
+                </li>
+                <li>
+                    <p>Tamanho principal: A largura ou altura de um <em>flex item</em>, dependendo da direção do
+                        container, é o tamanho principal do ítem. A propriedade de tamanho principal de um
+                        <em>flex item</em> pode ser tanto <code>width</code> quanto <code>height</code>,
+                        dependendo de qual delas estiver na direção principal.
+                    </p>
+                </li>
+                <li>
+                    <p>Eixo transversal: O eixo perpendicular ao eixo principal é chamado de eixo transversal.
+                        Sua direção depende da direção do eixo principal.</p>
+                </li>
+                <li>
+                    <p><em>cross-start | cross-end</em>: Linhas flex são preenchidas com ítens e adcionadas ao
+                        container, começando pelo lado <em>cross start</em> do <em>flex container</em> em
+                        direção ao lado <em>cross end</em>.</p>
+                </li>
+                <li>
+                    <p><em>cross size</em>: A largura ou altura de um <em>flex item</em>, dependendo do que
+                        estiver na dimensão transversal, é o <em>cross size</em> do íten. A propriedade
+                        <em>cross size</em> pode ser tanto a largura quanto a altura do ítem, o que estiver na
+                        transversal.
+                    </p>
+                </li>
+            </ul>
+            <p><strong>Flex container</strong> é o elemento que envolve sua estrutura. Você define que um
+                elemento é um Flex Container com a propriedade <code>display</code> e valores <code>flex</code>
+                ou <code>inline-flex</code>.</p>
+            <pre><code class="hljs xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex-container"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-container</span> {
+            <span class="hljs-attribute">display</span>: flex;
+          }</code></pre>
+            <p><strong>Flex Item</strong> são elementos-filhos do flex container.</p>
+            <p><strong>Eixos ou Axes</strong> são as duas direções básicas que existem em um Flex Container:
+                <em>main axis</em>, ou eixo principal, e <em>cross axis</em>, ou eixo transversal.
+            </p>
+            <h3>Propriedades para o elemento-pai</h3>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/01-container.svg"
+                    alt="container flex" target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Quando utilizamos o <em>Flexbox</em>, é muito importante saber quais propriedades são
+                declaradas no elemento-pai (por exemplo, uma <code>div</code> que irá conter os elementos
+                a serem alinhados) e quais serão declaradas nos elementos-filhos. Abaixo,
+                seguem propriedades que devem ser declaradas utilizando o elemento-pai
+                como seletor (para alinhar elementos-filhos):</p>
+            <p><strong>display</strong></p>
+            <p>Esta propriedade define um <em>flex container</em>; inline ou block dependendo dos valores
+                passados. Coloca todos os elementos-filhos diretos num contexto Flex.</p>
+            <pre><code class="hljs css"><span class="hljs-selector-class">.container</span> {
+          <span class="hljs-attribute">display</span>: flex; <span class="hljs-comment">/* or inline-flex */</span>
+        }</code></pre>
+            <p>Note que a propriedade de CSS <code>columns</code> não tem efeito em um <em>flex container</em>.
+            </p>
+            <h4><strong>flex-direction</strong></h4>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/flex-direction.svg"
+                    alt="flex-direction" target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Estabelece o eixo principal, definindo assim a direção em que os <em>flex items</em> são
+                alinhados no <em>flex container</em>. O Flexbox é (com exceção de um wrapping opcional) um
+                conceito de leiaute de uma só direção. Pense nos <em>flex items</em> inicialmente posicionaids
+                ou em linhas horizontais ou em colunas verticais.</p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-container</span> {
+            <span class="hljs-attribute">flex-direction</span>: row | row-reverse | column | column-reverse;
+          }</code></pre>
+            <ul>
+                <li><code>row</code> (padrão): esquerda para a direita em <code>ltr</code> (left to right),
+                    direita para a esquerda em <code>rtl</code> (right to left)</li>
+                <li><code>row-reverse</code>: direita para a esquerda em <code>ltr</code>, esquerda para a
+                    direita em <code>rtl</code></li>
+                <li><code>column</code>: mesmo que <code>row</code>, mas de cima para baixo</li>
+                <li><code>column-reverse</code>: mesmo que <code>row-reverse</code> mas de baixo para cima</li>
+            </ul>
+            <h4><strong>flex-wrap</strong></h4>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/flex-wrap.svg" alt="flex-wrap"
+                    target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Por padrão, os <em>flex items</em> vão todos tentar se encaixar em uma só linha. Com esta
+                propriedade você pode modificar esse comportamento e permitir que os ítens quebrem para uma
+                linha seguinte conforme for necessário.</p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-container</span> {
+            <span class="hljs-attribute">flex-wrap</span>: nowrap | wrap | wrap-reverse;
+          }</code></pre>
+            <ul>
+                <li><code>nowrap</code> (padrão): todos os <em>flex items</em> ficarão em uma só linha</li>
+                <li><code>wrap</code>: os <em>flex items</em> vão quebrar em múltiplas linhas, de cima para
+                    baixo</li>
+                <li><code>wrap-reverse</code>: os <em>flex items</em> vão quebrar em múltiplas linhas de baixo
+                    para cima</li>
+            </ul>
+            <h4><strong>flex-flow</strong></h4>
+            <p>A propriedade <strong>flex-flow</strong> é uma propriedade <em>shorthand</em> (uma mesma
+                declaração
+                inclui vários valores relacionados a mais de uma propriedade) que inclui
+                <code>flex-direction</code> e <code>flex-wrap</code>. Determina quais serão os eixos pricipal e
+                transversal do container. O valor padrão é <code>row nowrap</code>.
+            </p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-container</span> {
+            <span class="hljs-attribute">flex-flow</span>: row nowrap | row wrap | column nowrap | column wrap;
+          }</code></pre>
+            <h4><strong>justify-content</strong></h4>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/justify-content.svg"
+                    alt="justify-content" target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Esta propriedade define o alinhamento dos ítens ao longo do eixo principal. Ajuda a distribuir o
+                espaço livre que sobrar no container tanto se todos os flex items em uma linha são inflexíveis,
+                ou são flexíveis mas já atingiram seu tamanho máximo. Também exerce algum controle sobre o
+                alinhamento de ítens quando eles ultrapassam o limite da linha.</p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-container</span> {
+            <span class="hljs-attribute">justify-content</span>: flex-start | flex-end | center | space-between | space-around | space-evenly;
+          }</code></pre>
+            <ul>
+                <li><code>flex-start</code> (padrão): os ítens são alinhados junto à borda de início (start) de
+                    acordo com qual for a <code>flex-direction</code> do container.</li>
+                <li><code>flex-end</code>: os ítens são alinhados junto à borda final (end) de acordo com qual
+                    for a <code>flex-direction</code> do container.</li>
+                <li><code>start</code>: os ítens são alinhados junto à borda de início da direção do
+                    <code>writing-mode</code> (modo de escrita).
+                </li>
+                <li><code>end</code>: os ítens são alinhados junto à borda final da direção do
+                    <code>writing-mode</code> (modo de escrita).
+                </li>
+                <li><code>left</code>: os ítens são alinhados junto à borda esquerda do container, a não ser que
+                    isso não faça sentido com o <code>flex-direction</code> que estiver sendo utilizado. Nesse
+                    caso, se comporta como <code>start</code>.</li>
+                <li><code>left</code>: os ítens são alinhados junto à borda direita do container, a não ser que
+                    isso não faça sentido com o <code>flex-direction</code> que estiver sendo utilizado. Nesse
+                    caso, se comporta como <code>start</code>.</li>
+                <li><code>center</code>: os ítens são centralizados na linha.</li>
+                <li><code>space-between</code>: os ítens são distribuídos de forma igual ao longo da linha; o
+                    primeiro ítem junto à borda inicial da linha, o último junto à borda final da linha.</li>
+                <li><code>space-around</code>: os ítens são distribuídos na linha com o mesmo espaçamento entre
+                    eles. Note que, visualmente, o espaço pode não ser igual, uma vez que todos os ítens tem a
+                    mesma quantidade de espaço dos dois lados: o primeiro item vai ter somente uma unidade de
+                    espaço junto à borda do container, mas duas unidades de espaço entre ele e o próximo ítem,
+                    pois o próximo ítem também tem seu próprio espaçamento que está sendo aplicado.</li>
+                <li><code>space-evenly</code>: os ítens são distribuídos de forma que o espaçamento entre
+                    quaisquer dois itens da linha (incluindo entre os ítens e as bordas) seja igual.</li>
+            </ul>
+            <p>Nota: o suporte dado pelos navegadores para estes valores é difuso. Por exemplo, space-between
+                não tem suporte em nenhuma versão do Edge (até a elaboração deste tutorial) e
+                start/end/left/right ainda não foram implementados no Chrome. Para tabelas detalhadas, consulte
+                o MDN. Os valores mais seguros são flex-start, flex-end e center.</p>
+            <p>Também existem duas palavras-chave adicionais que você pode usar em conjunto com estes valores:
+                <code>safe</code> e <code>unsafe</code>. Safe garante que, independente da forma que você faça
+                esse tipo de posicionamento, não seja possível "empurrar" um elemento e fazer com que ele seja
+                renderizado para fora da tela (por exemplo, acima do topo), de uma forma que faça com que o
+                conteúdo seja impossível de movimentar com a rolagem da tela (o CSS chama isso de "perda de
+                dados").
+            </p>
+            <h4><strong>align-items</strong></h4>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/align-items.svg" alt="align-items"
+                    target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>define o comportamento padrão de como <em>flex items</em> são alinhados de acordo com o eixo
+                transversal (<em>cross axis</em>). De certa forma, funciona de forma similar ao
+                <code>justify-content</code>, porém no eixo transversal (perpendicular ao eixo principal).
+            </p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-container</span> {
+            <span class="hljs-attribute">align-items</span>: stretch | flex-start | flex-end | center | baseline;
+          }</code></pre>
+            <ul>
+                <li><code>stretch</code> (padrão): estica os ítens para preencher o container, respeitando o
+                    <code>min-width</code>/<code>max-width</code>).
+                </li>
+                <li><code>flex-start</code>/ <code>start</code> / <code>self-start</code>: ítens são
+                    posicionados no início do eixo transversal. A diferença entre eles é sutil e diz respeito às
+                    regras de <code>flex-direction</code> ou <code>writing-mode</code>.</li>
+                <li><code>center</code>: ítens são centralizados no eixo transversal.</li>
+                <li><code>baseline</code>: ítens são alinhados de acordo com suas baselines.</li>
+            </ul>
+            <p>Os modificadores <code>safe</code> e <code>unsafe</code> pode ser usados em conjunto com todas
+                essas palavras-chave (favor conferir o suporte de cada navegador) e servem para prevenir
+                qualquer alinhamento de elementos que faça com que o conteúdo fique inacessível (por exemplo,
+                para fora da tela).</p>
+            <h4><strong>align-content</strong></h4>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/align-content.svg"
+                    alt="align-content" target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Organiza as linhas dentro de um flex container quando há espaço extra no eixo transversal,
+                similar ao modo como <code>justify-content</code> alinha ítens individuais dentro do eixo
+                principal.</p>
+            <p><strong>Importante</strong>: Esta propriedade não tem efeito quando há somente uma linha de flex
+                items no container.</p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-container</span> {
+            <span class="hljs-attribute">align-content</span>: flex-start | flex-end | center | space-between | space-around | stretch;
+          }</code></pre>
+            <ul>
+                <li><code>flex-start</code> / <code>start</code>: ítens alinhados com o início do container. O
+                    valor (com maior suporte dos navegadores) flex-start se guia pela flex-direction, enquanto
+                    start se guia pela direção do writing-mode.</li>
+                <li><code>flex-end</code> / <code>end</code>: ítens alinhados com o final do container. O valor
+                    (com maior suporte dos navegadores) flex-end se guia pela flex-direction, enquanto end se
+                    guia pela direção do writing-mode.</li>
+                <li><code>center</code>: ítens centralizados no container.</li>
+                <li><code>space-between</code>: ítens distribuídos igualmente; a primeira linha junto ao início
+                    do container e a última linha junto ao final do container.</li>
+                <li><code>space-around</code>: ítens distribuídos igualmente com o mesmo espaçamento entre cada
+                    linha.</li>
+                <li><code>space-evenly</code>: ítens distribuídos igualmente com o mesmo espaçamento entre eles.
+                </li>
+                <li><code>stretch</code> (padrão): ítens em cada linha esticam para ocupar o espaço remanescente
+                    entre elas.</li>
+            </ul>
+            <p>Os modificadores <code>safe</code> e <code>unsafe</code> pode ser usados em conjunto com todas
+                essas palavras-chave (favor conferir o suporte de cada navegador) e servem para prevenir
+                qualquer alinhamento de elementos que faça com que o conteúdo fique inacessível (por exemplo,
+                para fora da tela).</p>
+            <h3>Propriedades para elementos-filhos</h3>
+            <p>A seguir, veremos propriedades que devem ser declaradas tendo como seletor os elementos-filhos,
+                ou seja:</p>
+            <pre><code class="hljs xml">  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex-container"</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex-item"</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex-item"</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+            <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">class</span>=<span class="hljs-string">"flex-item"</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span>
+          <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span></code></pre>
+            <p>Isso significa que, onde existe um elemento-pai com propriedade <em>flex</em> (o
+                <em>flex-container</em>), é
+                possível atribuir propriedades flex específicas também para as elementos-filhos
+                (<em>flex-item</em>).
+            </p>
+            <p>Você pode definir as propriedades abaixo para apenas um dos elementos-filhos através de um
+                identificador, como uma classe específica.</p>
+            <h3><strong>order</strong></h3>
+            <p>Determina a ordem em que os elementos aparecerão.</p>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/order.svg" alt="order"
+                    target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Por padrão os flex items são dispostos na tela na ordem do código. Mas a propriedade
+                <code>order</code> controla a ordem em que aparecerão no container.
+            </p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-item</span> {
+            <span class="hljs-attribute">order</span>: &lt;número&gt;; <span class="hljs-comment">/* o valor padrão é 0 */</span>
+          }</code></pre>
+            <h3><strong>flex-grow</strong></h3>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/flex-grow.svg" alt="grow"
+                    target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Define a habilidade de um flex item de crescer, caso necessário. O valor dessa propriedade é um
+                valor numérico sem indicação de unidade, que serve para cálculo de proporção. Este valor dita a
+                quantidade de espaço disponível no container que será ocupado pelo item.</p>
+            <p>Se todos os ítens tiverem flex-grow definido em 1, o espaço remanescente no container será
+                distribuído de forma igual entre todos. Se um dos ítens tem o valor de 2, vai ocupar o dobro de
+                espaço no container com relação aos outros (ou pelo menos vai tentar fazer isso).</p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-item</span> {
+            <span class="hljs-attribute">flex-grow</span>: &lt;numero&gt;; <span class="hljs-comment">/* o valor default(padrão) é 0 */</span>
+          }</code></pre>
+            <p>Valores negativos não são aceitos pela propriedade.</p>
+            <h3><strong>flex-shrink</strong></h3>
+            <p>Define a habilidade de um flex item de encolher, caso necessário.</p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-item</span> {
+            <span class="hljs-attribute">flex-shrink</span>: &lt;número&gt;; <span class="hljs-comment">/* o valor padrão é 0 */</span>
+          }</code></pre>
+            <p>Valores negativos não são aceitos pela propriedade.</p>
+            <p><strong>flex-basis</strong></p>
+            <p>Define o tamanho padrão para um elemento antes que o espaço remanescente do container seja
+                distribuído. Pode ser um comprimento (por exemplo, 20%, 5rem, etc) ou uma palavra-chave. A
+                palavra-chave <code>auto</code> significa "observe minhas propriedades de altura ou largura" (o
+                que era feito pela palavra-chave <code>main-size</code>, que foi depreciada). A palavra-chave
+                <code>content</code> significa "estabeleça o tamanho com base no conteúdo interno do ítem" -
+                essa palavra-chave ainda não tem muito suporte, então não é fácil de ser testada, assim como
+                suas relacionadas: <code>max-content</code>, <code>min-content</code> e
+                <code>fit-content</code>.
+            </p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.flex-item</span> {
+            <span class="hljs-attribute">flex-basis</span>: flex-basis:  | auto; <span class="hljs-comment">/* o valor padrão é auto */</span>
+          }</code></pre>
+            <p>Com o valor de <code>0</code>, o espaço extra ao redor do conteúdo não é considerado. Com o valor
+                de <code>auto</code>, o espaço extra é distribuído com base no valor de <code>flex-grox</code>
+                do ítem.</p>
+            <h4><strong>flex</strong></h4>
+            <p>Esta é a propriedade <em>shorthand</em> para <code>flex-grow</code>, <code>flex-shrink</code> e
+                <code>flex-basis</code>, combinadas. O segundo e terceiro parâmetros (<code>flex-shrink</code> e
+                <code>flex-basis</code>) são opcionais. O padrão é <code>0 1 auto</code>, mas se você definir
+                com apenas um número, é equivalente a <code>0 1</code>.
+            </p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.item</span> {
+            <span class="hljs-attribute">flex</span>: none | [ &lt;<span class="hljs-string">'flex-grow'</span>&gt; &lt;<span class="hljs-string">'flex-shrink'</span>&gt;? || &lt;<span class="hljs-string">'flex-basis'</span>&gt; ]
+          }</code></pre>
+            <p><strong>É recomendado que você utilize esta propriedade <em>shorthand</em></strong> ao invés de
+                definir cada uma das propriedades em separado. O <em>shorthand</em> define os outros valores de
+                forma inteligente.</p>
+            <h4><strong>align-self</strong></h4>
+            <p><img src="https://css-tricks.com/wp-content/uploads/2018/10/align-self.svg" alt="align-self"
+                    target="_blank" rel="noopener" class="cosmos-image"></p>
+            <p>Permite que o alinhamento padrão (ou o que estiver definido por <code>align-items</code>) seja
+                sobrescrito para ítens individuais.</p>
+            <p>Por favor veja a explicação da propriedade <code>align-items</code> para entender quais são os
+                possíveis valores.</p>
+            <pre><code class="hljs css">  <span class="hljs-selector-class">.item</span> {
+            <span class="hljs-attribute">align-self</span>: auto | flex-start | flex-end | center | baseline | stretch;
+          }</code></pre>
+            <h3>Importante!</h3>
+            <ul>
+                <li>O CSS só enxerga a hierarquia pai-filho; não vai aplicar as propriedades Flex
+                    para elementos que não estejam diretamente relacionados;</li>
+                <li>Para que as propriedades funcionem nos elementos-filhos, as pais devem ter
+                    propriedade <code>display: flex;</code>.</li>
+                <li>As propriedades <code>float</code>, <code>clear</code> e <code>vertical-align</code> não têm
+                    efeito em
+                    flex-items.</li>
+            </ul>
+            <h3>Vamos praticar?</h3>
+            <p><a href="https://flexboxfroggy.com/" target="_blank" rel="noopener">Flexbox Froggy</a></p>
+            <h3>Links úteis</h3>
+            <p>Assim como qualquer outra nova funcionalidade que aprendemos, é fundamental praticar bastante e
+                pesquisar sempre que temos dúvidas. A seguir, alguns links úteis.</p>
+            <p>Este conteúdo se baseia em grande parte no tutorial da <a
+                    href="https://css-tricks.com/snippets/css/a-guide-to-flexbox/" target="_blank"
+                    rel="noopener">CSS Tricks</a>, com nossos agradecimentos! Guarde nos seus favoritos para
+                consultar sempre que precisar.</p>
+            <p>O guia do CSS Tricks também aborda alguns outros aspectos importantes do Flex: suporte dos
+                navegadores, bugs, propriedades relacionadas, prefixos e etc. Caso tenha alguma dúvida que não
+                foi abordada neste artigo, você pode consultar estes temas relacionados no link.</p>
+            <ul>
+                <li>
+                    <p><a href="https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox"
+                            target="_blank" rel="noopener">Flexbox no MDN</a></p>
+                </li>
+                <li>
+                    <p><a href="https://www.w3schools.com/csS/css3_flexbox.asp" target="_blank"
+                            rel="noopener">Flexbox no W3Schools</a></p>
+                </li>
+            </ul>
+            <p>Gostou do post e quer saber mais? Aqui na <strong>Alura</strong> temos uma <a
+                    href="https://www.alura.com.br/cursos-online-front-end"><strong>formação
+                        front-end</strong></a> onde você vai aprender mais sobre <strong>HTML e CSS</strong></p>
+        
+</div> 

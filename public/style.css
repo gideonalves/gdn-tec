@@ -1,0 +1,79 @@
+@import 'https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap'; 
+
+*{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-decoration: none;
+}
+
+header {
+    background-color: rgb(203, 221, 221);
+    width: 100%;    
+}
+
+.nav {
+    max-width: 940px;
+    margin: 0 auto;
+    padding: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav #logo {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    color: darkblue;
+}
+
+.nav .links a{
+    font-size: 18px;
+    margin-right: 10px;
+    color: darkblue;
+    text-transform: uppercase;
+}
+
+.container {
+    display: flex;
+    margin-top: 20px;
+
+    grid-template-columns: 1fr 1fr;
+}
+
+.container .menu {
+    width: 20%;
+    background:  rgb(192, 230, 230);
+    padding: 15px;
+    box-sizing: border-box;
+    border: 1px solid blue;
+    border-radius: 8px;
+    margin-right: 10px;
+}
+
+.container .menu a {
+    display: block;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    line-height: 30px;
+    padding: 15px;
+    color: black;
+
+}
+.menu a:hover {
+    background: cyan;
+    color: white;
+}
+
+.container .central {
+    width: 80%;
+    padding: 15px;
+    background:  rgb(192, 230, 230);
+    border: 1px solid blue;
+    border-radius: 8px;
+}
+
+.central h1 {
+    text-align: center;
+}

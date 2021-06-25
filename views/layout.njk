@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <title>GDN Tecnologia</title>
+        {% endblock %}
+        <link rel="stylesheet" href="/style.css">
+    </head>
+
+    <body>
+        <header>
+            <nav class="nav">
+                <div id="logo">
+                    GDN Tecnologia
+                </div>
+
+                <div class="links">
+                    <a href="/pgnHtml">html</a>
+                    <a href="/pgnCss/pgn_css">css</a>
+                    <a href="/pgnJs/pgn_js">javascript</a>
+                    <a href="/pgnNode/pgn_node">node</a>
+                    <a href="/pgnGithub/pgn_github">github</a>
+                    <a href="/pgnSql/pgn_sql">sql</a>
+                    </ul>
+                </div>
+
+            </nav>
+        </header>
+
+    {% block content %}{% endblock %}
+
+        <script src="/scripts.js"></script>
+
+    </body>
+</html>
